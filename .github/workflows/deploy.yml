@@ -25,18 +25,17 @@ jobs:
       run: curl https://cli-assets.heroku.com/install.sh | sh
 
     - name: Authenticate with Heroku
-      run: echo "$HEROKU_API_KEY" | heroku auth:token
+      run: heroku auth:token
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
     - name: Add Heroku remote
       run: heroku git:remote -a cal-counter
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
     - name: Deploy to Heroku
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+        heroku auth:token | git push heroku main
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        git remote -v
-        git push heroku main
