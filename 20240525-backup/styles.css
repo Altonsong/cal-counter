@@ -1,0 +1,149 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: roboto;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.top-nav, .bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+
+.top-nav h1, .bottom-nav span {
+  font-size: 24px;
+}
+
+.dish-page-title {
+  font-family: "Yuji Boku", serif;
+  font-size: 50px;
+}
+
+.material-icons {
+  font-size: 24px;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.dish-feature img {
+  width: 100%;
+  height: 290px;
+}
+
+.dish-feature-name {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top:0px;
+  padding-bottom: 0px;
+  font-family: roboto;
+  font-size:18px;
+  font-weight: 300;
+}
+
+
+.dish-meta {
+  text-align: center;
+  display: flex; /* 如果使用gap属性 */
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center; /* 这会垂直居中所有子元素，包括图标 */
+
+}
+
+span.number-text1 {
+    margin-left: 0px; /* 在左侧添加20px的外边距 */
+}
+
+span.number-text2 {
+    margin-left: 40px; /* 在左侧添加20px的外边距 */
+}
+
+span.number-text3 {
+    margin-left: 40px; /* 在左侧添加20px的外边距 */
+}
+
+span.number-text4 {
+    margin-left: 40px; /* 在左侧添加20px的外边距 */
+}
+
+.dish-menu {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.btn {
+  background-color: #f8f8f8;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* .dish-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}*/
+
+/* .dish-list {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+  padding: 0 10px;
+}
+
+dish-list img {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+} */
+
+span.material-symbols-outlined.expand-all {
+    font-size: 14px;  /* 设置图标的大小 */
+    font-weight: bold;;
+}
+
+.dish-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 创建三列，每列宽度平分可用空间 */
+  gap: 20px; /* 设置网格项之间的间隙为20px */
+  padding: 10px; /* 给容器添加一些内边距 */
+}
+
+.dish-box {
+  display: flex;
+  flex-direction: column; /* 设置子元素垂直排列 */
+  align-items: center; /* 水平居中对齐子元素 */
+  border-radius: 8px; /* 可选，为盒子添加圆角 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 可选，为盒子添加阴影效果 */
+}
+
+.dish-box img {
+  width: 100%; /* 图像宽度撑满容器 */
+  height: auto; /* 图像高度自动调整 */
+  border-radius: 8px; /* 图像圆角 */
+}
+
+.dish-name {
+  text-align: center; /* 文本居中 */
+  padding: 10px 0; /* 在文本上下添加一些内边距 */
+}

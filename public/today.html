@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-nav, .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+        }
+
+        .top-nav h1 {
+            font-family: "Yuji Boku";
+            font-size: 22px;
+        }
+
+        .bottom-nav span {
+            font-size: 20px;
+        }
+
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .calorie-summary {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .calorie-summary span {
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .dish-list-today {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .dish-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .dish-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .dish-info {
+            flex: 1;
+        }
+
+        .dish-info p {
+            margin: 0;
+            padding: 2px 0;
+        }
+
+        .dish-info .time {
+            font-size: 12px;
+            color: grey;
+        }
+
+        .dish-info .name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .dish-info .details {
+            font-size: 14px;
+        }
+
+        .material-icons.delete {
+            cursor: pointer;
+        }
+
+        @media (max-width: 360px) {
+            .top-nav h1, .bottom-nav span {
+                font-size: 18px;
+            }
+
+            .top-nav, .bottom-nav {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-nav">
+            <img id="homeIcon" src="./icons/home.png" alt="Home" style="width:24px;height:24px;">
+            <h1 class="today-page-title">TODAY</h1>
+            <img src="./icons/info.png" alt="Info" style="width:24px;height:24px;">
+        </header>
+        <main class="main">
+            <div class="calorie-summary">
+                <span id="totalCalories">0</span> <span>Cal</span>
+            </div>
+            <div class="dish-list-today" id="dishListToday">
+                <!-- Dish items will be added here -->
+            </div>
+        </main>
+        <footer class="bottom-nav">
+            <span class="material-icons">event_note</span>
+            <span class="material-icons">list</span>
+        </footer>
+    </div>
+    <script>
+    document.getElementById("homeIcon").addEventListener("click", function() {
+        window.location.href = "./index.html";
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/today')
+        .then(response => response.json())
+        .then(dishes => {
+            const dishListToday = document.getElementById('dishListToday');
+            let totalCalories = 0;
+
+            dishes.forEach(dish => {
+                const dishItem = document.createElement('div');
+                dishItem.className = 'dish-item';
+                dishItem.innerHTML = `
+                    <img src="${dish.image}" alt="${dish.name}">
+                    <div class="dish-info">
+                        <p class="time">${dish.time}</p>
+                        <p class="name">${dish.name}</p>
+                        <p class="details">${dish.serve} Serve ${dish.calories}Cal</p>
+                    </div>
+                    <span class="material-icons delete" onclick="removeDish('${dish._id}')">delete</span>
+                `;
+                dishListToday.appendChild(dishItem);
+                totalCalories += dish.calories;
+            });
+
+            document.getElementById('totalCalories').textContent = totalCalories;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    function removeDish(dishId) {
+        fetch(`/api/today/${dishId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(() => {
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+</body>
+</html>
