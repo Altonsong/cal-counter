@@ -25,9 +25,15 @@ jobs:
       run: |
         curl https://cli-assets.heroku.com/install.sh | sh
 
+    - name: Debug Heroku CLI installation
+      run: heroku --version
+
+    - name: Add Heroku remote
+      run: heroku git:remote -a cal-counter
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
     - name: Deploy to Heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku git:remote -a cal-counter
-        git push heroku main
+      run: git push heroku main
